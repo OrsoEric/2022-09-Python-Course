@@ -52,7 +52,7 @@ class Vehicle( Wheel ):
         for n_index in range(in_num_wheels):
             self._lc_wheel.append( Wheel( is_wheel_manufacturer, in_diameter ) )
 
-        logging.debug( self )
+        logging.debug( Vehicle().__str__( self ) )
 
     def __str__( self ):
         if not hasattr(self, "_n_num_wheels" ):
@@ -63,6 +63,29 @@ class Vehicle( Wheel ):
         else:
             return f"Manufacturer: {self._s_manufacturer} | Number of Wheels: {self._n_num_wheels} | Wheels: " +Wheel.__str__( self._lc_wheel[0] )
 
+class Ev( Vehicle ):
+    def __init__( self, in_battery_capacity : Number = None, *args):
+        #Call constructor of father
+        print(args)
+        #SUPER has the type of Vehicle
+        super().__init__( args ) 
+        if in_battery_capacity is None:
+            self._n_battery_capacity = 0.0
+        else:
+            self._n_battery_capacity = in_battery_capacity
+
+        logging.debug( Ev().__str__( self ) )
+
+    def __str__( self ):
+        if not hasattr(self, "_n_num_wheels" ):
+            return "NO _n_num_wheels E"
+
+        if self._n_num_wheels <= 0:
+            return f"Manufacturer: {self._s_manufacturer} | Number of Wheels: {self._n_num_wheels} | No Wheels"
+        else:
+            return f"Battery Capacity: {self._n_battery_capacity}  | Vehicle: " +Vehicle.__str__( self )
+
+
 if __name__ == "__main__":
     logging.basicConfig( level=logging.DEBUG, format='[%(asctime)s] %(module)s:%(lineno)d %(levelname)s> %(message)s' )
 
@@ -70,8 +93,10 @@ if __name__ == "__main__":
     #my_pirellu = Wheel( "Pirelli", 600.0 )
 
     
-    my_ferrari = Vehicle( "Ferrari", 4, "Pirelli", 450.0 )
-    my_pegeut = Vehicle( "Pegeut", 4, "Donut", 550.0 )
+    #my_ferrari = Vehicle( "Ferrari", 4, "Pirelli", 450.0 )
+    #my_pegeut = Vehicle( "Pegeut", 4, "Donut", 550.0 )
+
+    my_tesla = Ev( 100.0, "Tesla", 3, "Rubby", 350.0 )
 
     #my_car = Vehicle()
 
