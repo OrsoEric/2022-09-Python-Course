@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "2022-09-21 python squillero poetry"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+packages = [{include = "2022_09_21 python squillero poetry"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+jupyter = "^1.0.0"
+yapf = "^0.32.0"
+toml = "^0.10.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
