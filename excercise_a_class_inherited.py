@@ -3,6 +3,8 @@
 #2) create object veichle that has a number of wheels
 #
 
+#Excercise Electric veichle battery
+
 import logging
 import numbers
 from tokenize import Number
@@ -24,7 +26,7 @@ class Wheel:
             self._n_diameter = 0.0
         else:
             self._n_diameter = in_diameter
-        logging.debug( self )
+        logging.debug( Wheel.__str__( self ) )
 
     def __str__( self ):
         """Stringify"""
@@ -34,6 +36,7 @@ class Wheel:
 class Vehicle( Wheel ):
     def __init__( self, is_vehicle_manufacturer :str = None, in_num_wheels : Number = None, is_wheel_manufacturer : str = None, in_diameter : Number = None ):
         #Call constructor of father
+        #SUPER has the type of Vehicle
         super().__init__( is_wheel_manufacturer, in_diameter ) 
         if is_vehicle_manufacturer is None:
             self._s_manufacturer = "?"
@@ -52,18 +55,23 @@ class Vehicle( Wheel ):
         logging.debug( self )
 
     def __str__( self ):
-        #return f"Manufacturer: {self._s_manufacturer} | Number of Wheels: {self._n_num_wheels} | Wheels: "
-        return f"Manufacturer: {self._s_manufacturer} | Number of Wheels: {self._n_num_wheels} | Wheels: " +Wheel.__str__( self._lc_wheel[0] )
+        if not hasattr(self, "_n_num_wheels" ):
+            return "NO _n_num_wheels E"
+
+        if self._n_num_wheels <= 0:
+            return f"Manufacturer: {self._s_manufacturer} | Number of Wheels: {self._n_num_wheels} | No Wheels"
+        else:
+            return f"Manufacturer: {self._s_manufacturer} | Number of Wheels: {self._n_num_wheels} | Wheels: " +Wheel.__str__( self._lc_wheel[0] )
 
 if __name__ == "__main__":
     logging.basicConfig( level=logging.DEBUG, format='[%(asctime)s] %(module)s:%(lineno)d %(levelname)s> %(message)s' )
 
-    my_wheel = Wheel()
-    my_pirellu = Wheel( "Pirelli", 600.0 )
+    #my_wheel = Wheel()
+    #my_pirellu = Wheel( "Pirelli", 600.0 )
 
     
     my_ferrari = Vehicle( "Ferrari", 4, "Pirelli", 450.0 )
     my_pegeut = Vehicle( "Pegeut", 4, "Donut", 550.0 )
 
-    my_car = Vehicle()
+    #my_car = Vehicle()
 
