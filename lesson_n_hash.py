@@ -3,6 +3,7 @@ import logging
 #hash transform something into a signature number
 #needs to be immutable, because hash finds places in a database often
 #hash return must never change
+#hash is made by professionals. use hash of immutable supported objects to find hash of your object
 
 class Shaka:
     def __init__(self):
