@@ -65,26 +65,26 @@ class Binary_search_tree:
         #contruct a new node
         new_node = Node( i_key, i_value )
         #traverse from root
-        if (self._root is None):
-            self._root = new_node
-        else:
-            current_node = self._root
-            while (current_node is not None):
-                if (new_node == current_node):
-                    #there can't be two nodes with same keys
-                    return True
-                elif (new_node < current_node):
-                    if (current_node.left is None):
-                        current_node.left = new_node
-                    else:
-                        current_node = current_node.left
-                elif (new_node > current_node):
-                    if (current_node.right is None):
-                        current_node.right = new_node
-                    else:
-                        current_node = current_node.right
+        current_node = self._root
+        while (current_node is not None):
+            if (new_node == current_node):
+                #there can't be two nodes with same keys
+                logging.error(f"Trying to add node with same key {new_node.key} as existing node {current_node.key}")
+                return True
+            elif (new_node < current_node):
+                if (current_node.left is None):
+                    current_node.left = new_node
                 else:
-                    pass
+                    current_node = current_node.left
+            elif (new_node > current_node):
+                if (current_node.right is None):
+                    current_node.right = new_node
+                else:
+                    current_node = current_node.right
+            else:
+                raise Exception(f"Algorithmic error. Key {new_node.key} is neither < == nor > as  {current_node.key}")
+        else:
+            self._root = new_node
 
     def show( self, i_node : Node = None, is_indent : str = "", is_branch : str = None ):
         if (self._root is None ):
@@ -115,7 +115,6 @@ class Binary_search_tree:
 if __name__ == "__main__":
     logging.basicConfig( level=logging.DEBUG, format='[%(asctime)s] %(module)s:%(lineno)d %(levelname)s> %(message)s' )
 
-
     #my_node = Node()
     my_node = Node( 42, "Erd Tree Root" )
     #print("Key: ", my_node.key)
@@ -129,6 +128,7 @@ if __name__ == "__main__":
     my_tree.add( 43, "Sellen" )
     my_tree.add( 45, "Luden" )
     my_tree.add( 41, "Troy" )
+    my_tree.add( 999, "Elden Lady" )
     
     print( "--------------------------------------------------" )
     my_tree.show()
