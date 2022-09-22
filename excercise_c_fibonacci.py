@@ -32,7 +32,13 @@ class Fibonacci:
                 return y
 
     def __call__( self, value : numbers.Number ) -> numbers.Number:
+        """Overload round bracket to be same as square brackets"""
         return self[value]
+
+    def __contains__( self, in_index : numbers.Number ) -> bool:
+        """Allows operator in to work"""
+        return in_index in self._d_cache
+
 
 
 if __name__ == "__main__":
@@ -45,3 +51,8 @@ if __name__ == "__main__":
 
     for n_index in range( 10 ):
         logging.debug( f" {n_index} -> {my_fibonacci(n_index) }" )
+
+    n_index = 7
+    logging.debug( f" Contains: {n_index} -> {n_index in my_fibonacci }" )
+    n_index = 12
+    logging.debug( f" Contains: {n_index} -> {n_index in my_fibonacci }" )
