@@ -1,5 +1,6 @@
 import logging
 import numbers
+from re import X
 
 #hash transform something into a signature number
 #needs to be immutable, because hash finds places in a database often
@@ -38,3 +39,20 @@ if __name__ == "__main__":
 
 
     logging.debug( "Turn into callable: ", c_test( 10 ) )
+
+
+    pippo = [23, 10]
+    
+    pluto = pippo + [3, 7]
+    #return the unique ID of the object
+    print("Original Object", id(pippo))
+    print("Created new object", id(pluto))
+    pippo += [3, 7]
+    print("Reused same object", id(pippo))
+
+
+    x = [7,3]
+    a = x
+    b = +x
+    print(a is x)
+    print(b is x)
