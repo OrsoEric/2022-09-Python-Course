@@ -7,7 +7,6 @@ import numbers
 
 from itertools import  product
 
-
 #find the nth fibonacci number overloading bracket operator
 class Turnip:
     def __init__( self ):
@@ -32,6 +31,9 @@ class Turnip:
                     self._n_index += 1
                     return self._ln_data[self._n_index -1]
         return My_iterator( self._ln_list )
+
+
+    
 
 
 if __name__ == "__main__":
