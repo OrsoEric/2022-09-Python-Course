@@ -86,7 +86,27 @@ class Binary_search_tree:
         else:
             self._root = new_node
 
+    def find_node( self, i_key = None ):
+        """Find a node with a given key"""
+        if (i_key == None):
+            return None
+        current_node = self._root
+        while (current_node is not None):
+            #logging.debug(f"{current_node}")
+            if (current_node.key == i_key):
+                return current_node
+            elif (i_key < current_node.key):
+                current_node = current_node.left
+            elif (i_key > current_node.key):
+                current_node = current_node.right
+            else:
+                raise Exception(f"Algorithmic error. Key {i_key} is neither < == nor > as  {current_node.key}")
+        else:
+            return None
+    
+
     def show( self, i_node : Node = None, is_indent : str = "", is_branch : str = None ):
+        """Show the tree structure, key and content"""
         if (self._root is None ):
             print( "Empty Tree" )
             return True
@@ -105,6 +125,9 @@ class Binary_search_tree:
         if (current_node.right is not None):
             self.show( current_node.right, is_indent+"    ", is_branch="> | " )
             
+    def __contains__( self, i_key = None ):
+        return (self.find_node( i_key ) is not None)
+
     def __str__(self):
         """Stringfy the tree"""
         if (self._root is None ):
@@ -132,4 +155,17 @@ if __name__ == "__main__":
     
     print( "--------------------------------------------------" )
     my_tree.show()
+    if (False):
+        print( "--------------------------------------------------" )
+        print("Test find_node")
+        print( my_tree.find_node( 42 ) )
+        print( my_tree.find_node( 40 ) )
+        print( my_tree.find_node( 999 ) )
+        print( my_tree.find_node( 404 ) )
+        
+    if (False):
+        print( "--------------------------------------------------" )
+        print("Test contains")
+        print( 999 in my_tree )
+        print( 404 in my_tree )
 
