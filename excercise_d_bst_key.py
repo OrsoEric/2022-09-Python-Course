@@ -158,6 +158,14 @@ class Binary_search_tree:
         else:
             return None
 
+    def node_iterator( self, start_key, stop_key ):
+        """Iterate nodes from start key to stop key"""
+        node = self.find_node( start_key )
+        if (node is None):
+            return None
+        while (node.key <= stop_key):
+            yield node
+            node = self.successor( node )
 
     def show( self, i_node : Node = None, is_indent : str = "", is_branch : str = None ):
         """Show the tree structure, key and content"""
@@ -245,6 +253,8 @@ if __name__ == "__main__":
 
     print( "--------------------------------------------------" )
     
+
+
     if (False):
         print( "--------------------------------------------------" )
         print("Test find_node")
@@ -259,3 +269,7 @@ if __name__ == "__main__":
         print( 999 in my_tree )
         print( 404 in my_tree )
 
+    if (True):
+        print( "--------------------------------------------------" )
+        print("Test an iterator that returns all nodes in a given range")
+        print( [x.__str__() for x in my_tree.node_iterator(7, 25) ])
