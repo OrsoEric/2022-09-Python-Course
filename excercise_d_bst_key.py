@@ -137,8 +137,14 @@ class Binary_search_tree:
             i_node = i_node.father
             #while I'm the left child of the father, I found the successor
             while (i_key > i_node.key):
-                i_key = i_node.key
-                i_node = i_node.father
+                #if node has a father
+                if (i_node.father is not None):
+                    i_key = i_node.key
+                    i_node = i_node.father
+                #I reached the root
+                else:
+                    return None
+                    raise Exception(f"Root")
             else:
                 return i_node
             #I'm the right child. I need to go up until I find a father for which I'm the left child
@@ -147,7 +153,7 @@ class Binary_search_tree:
 
 
 
-                #raise Exception(f"Not Implemented Yet")
+                #
         #I can't go up if I'm the root, I dont' have a successor
         else:
             return None
@@ -229,7 +235,12 @@ if __name__ == "__main__":
         print( "Successor: ", my_tree.successor( my_tree.find_node(1) ) )
         print( "Successor: ", my_tree.successor( my_tree.find_node(7) ) )
 
-        print( "Successor: ", my_tree.successor( my_tree.find_node(13) ) )
+        print( "Successor: 13 -> ", my_tree.successor( my_tree.find_node(13) ) )
+        print( "Successor: 25 -> ", my_tree.successor( my_tree.find_node(25) ) )
+        print( "Successor: 40 -> ", my_tree.successor( my_tree.find_node(40) ) )
+
+        print( "Successor: 36 -> ", my_tree.successor( my_tree.find_node(36) ) )
+        print( "Successor: 34 -> ", my_tree.successor( my_tree.find_node(34) ) )
 
 
     print( "--------------------------------------------------" )
