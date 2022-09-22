@@ -78,6 +78,9 @@ class Binary_search_tree:
     def __init__(self):
         """Empty tree constructor"""
         self._root = None
+        #needed to do slicing with ::, needed to do generatros that make any() work
+        self._n_key_min = None
+        self._n_key_max = None
 
     def add(self, i_key, i_value ) -> Node:
         """Add a new node to the tree"""
@@ -107,7 +110,19 @@ class Binary_search_tree:
         #I end up here if the tree is uninitialized
         else:
             self._root = new_node
+            self._n_key_min = new_node.key
+            self._n_key_max = new_node.key
+            #root has no father
             new_node.father = None
+
+        #update min and max
+        if (new_node.key < self._n_key_min):
+            self._n_key_min = new_node.key
+            logging.debug(f"New Min {self._n_key_min}")
+        if (new_node.key > self._n_key_max):
+            self._n_key_max = new_node.key
+            logging.debug(f"New Max {self._n_key_max}")
+        
         return new_node
 
     def find_node( self, i_key = None ):
@@ -204,9 +219,17 @@ class Binary_search_tree:
         #when key is a slice
         elif (isinstance(i_key, slice)):
             assert i_key is not None, "Step not supported"
-            assert i_key.stop is not None, "Need to specify a stop"
-            assert i_key.start is not None, "Need to specify a start"
-            return [str(x) for x in self.node_iterator( i_key.start, i_key.stop )]
+            if (i_key.start is None):
+                key_start = self._n_key_min
+            else:
+                key_start = i_key.start
+
+            if (i_key.stop is None):
+                key_stop = self._n_key_max
+            else:
+                key_stop = i_key.stop
+            logging.debug(f"Slice | Min {key_start} | Max {key_stop}")
+            return [str(x) for x in self.node_iterator( key_start, key_stop )]
         else:
             raise Exception("Not implemented yet")
         
@@ -316,6 +339,6 @@ if __name__ == "__main__":
     if (True):
         print( "--------------------------------------------------" )
         print("Test slice")
-        print( my_tree[7:25] )
-        #print( my_tree[7:] )
+        print( f"from 7 to 25 {my_tree[7:25]}" )
+        print( f"from 7 to MAX {my_tree[7:]}" )
         print("Any should search only needed:", any(x.value > 0 for x in my_tree))
