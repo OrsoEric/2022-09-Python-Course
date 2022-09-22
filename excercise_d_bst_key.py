@@ -21,6 +21,12 @@ class Node:
         """getter _value"""
         return self._value
 
+    @value.setter
+    def value( self, i_value : "Node" ) -> bool:
+        """setter _value"""
+        self._value = i_value
+        return False
+
     @property
     def father( self ):
         """getter _father"""
@@ -62,6 +68,8 @@ class Node:
         """Overload '<' between Node"""
         return self.key < rhs.key
 
+    #doesn't exist less or equal
+
     def __str__(self) -> str:
         """Stringfy. Show key, value and ID of three items"""
         return f"Key {self._key} | Value {self._value} | Self: {id(self)} | Left {id(self._left)} | Right {id(self._right)}"
@@ -96,6 +104,7 @@ class Binary_search_tree:
                     current_node = current_node.right
             else:
                 raise Exception(f"Algorithmic error. Key {new_node.key} is neither < == nor > as  {current_node.key}")
+        #I end up here if the tree is uninitialized
         else:
             self._root = new_node
             new_node.father = None
@@ -144,7 +153,7 @@ class Binary_search_tree:
                 #I reached the root
                 else:
                     return None
-                    raise Exception(f"Root")
+
             else:
                 return i_node
         #I can't go up if I'm the root, I dont' have a successor
@@ -159,6 +168,10 @@ class Binary_search_tree:
         while (node.key <= stop_key):
             yield node
             node = self.successor( node )
+
+    def __iter__(self):
+        """Iterator. TODO: implement start and stop a none to map to the minimum and maximum keys"""
+        return (node for node in self.node_iterator( None, None ))
 
     def show( self, i_node : Node = None, is_indent : str = "", is_branch : str = None ):
         """Show the tree structure, key and content"""
@@ -187,13 +200,26 @@ class Binary_search_tree:
         #when key is a number
         if (isinstance(i_key,Number)):
             return self.find_node( i_key )
+
         #when key is a slice
         elif (isinstance(i_key, slice)):
             assert i_key is not None, "Step not supported"
+            assert i_key.stop is not None, "Need to specify a stop"
+            assert i_key.start is not None, "Need to specify a start"
             return [str(x) for x in self.node_iterator( i_key.start, i_key.stop )]
         else:
             raise Exception("Not implemented yet")
         
+    def __setitem__( self, i_key, i_value ):
+        """Use square bracket to set a value or create a node with a value"""
+        search_node = self.find_node( i_key )
+        #node exists
+        if (search_node is not None):
+            search_node.value = i_value
+        #node doesn't exist
+        else:
+            self.add( i_key, i_value )
+
     def __contains__( self, i_key = None ):
         return (self.find_node( i_key ) is not None)
 
@@ -234,6 +260,9 @@ if __name__ == "__main__":
     my_tree.add( 12, "*" )
     my_tree.add( 36, "*" )
     my_tree.add( 13, "*" )
+    #test set item
+    my_tree[14] = "*"
+    my_tree[14] = "Meruem"
     my_tree.show()
 
     print( "--------------------------------------------------" )
@@ -288,3 +317,5 @@ if __name__ == "__main__":
         print( "--------------------------------------------------" )
         print("Test slice")
         print( my_tree[7:25] )
+        #print( my_tree[7:] )
+        print("Any should search only needed:", any(x.value > 0 for x in my_tree))
