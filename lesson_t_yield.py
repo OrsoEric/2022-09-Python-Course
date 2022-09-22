@@ -11,8 +11,6 @@ class Explore_slice():
 if __name__ == "__main__":
     logging.basicConfig( level=logging.DEBUG, format='[%(asctime)s] %(module)s:%(lineno)d %(levelname)s> %(message)s' )
 
-
-
     my_class = Explore_slice()
     my_class[0]
     my_class[0:5]
