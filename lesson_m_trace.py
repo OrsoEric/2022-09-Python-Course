@@ -1,8 +1,6 @@
 import logging
 import numbers
 import math 
-#le and eq are enough to define all other operators
-
 
 class Point_2d:
     """__slot__ destroy the dictionary and prevent fields from being added or removed"""
