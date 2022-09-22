@@ -1,4 +1,5 @@
 import logging
+import numbers
 
 #hash transform something into a signature number
 #needs to be immutable, because hash finds places in a database often
@@ -15,8 +16,13 @@ class Shaka:
         return hash( self._immutable )
 
     def __bool__(self):
-        """An object can have a condition. e.g. a list return false if empty."""
+        """An object can have a condition. e.g. a list return false if empty. Usually bool of an empty constructor is false. If len is defined, bool will be false if len is zero."""
         return self._immutable[0] > 0
+
+    def __call__( self, n_num : numbers.Number ):
+        """Turn an object into a callable. FUNCTOR"""
+        return self._mutable[0] + n_num
+
 
 
 if __name__ == "__main__":
@@ -29,3 +35,6 @@ if __name__ == "__main__":
         logging.debug( hash( [30, 2 ]) )
     except:
         logging.debug( "Unhashable" )
+
+
+    logging.debug( "Turn into callable: ", c_test( 10 ) )
