@@ -147,13 +147,6 @@ class Binary_search_tree:
                     raise Exception(f"Root")
             else:
                 return i_node
-            #I'm the right child. I need to go up until I find a father for which I'm the left child
-            #else:
-                
-
-
-
-                #
         #I can't go up if I'm the root, I dont' have a successor
         else:
             return None
@@ -189,6 +182,18 @@ class Binary_search_tree:
         if (current_node.right is not None):
             self.show( current_node.right, is_indent+"    ", is_branch="> | " )
             
+    def __getitem__( self, i_key ):
+        """Find an item with a given key"""
+        #when key is a number
+        if (isinstance(i_key,Number)):
+            return self.find_node( i_key )
+        #when key is a slice
+        elif (isinstance(i_key, slice)):
+            assert i_key is not None, "Step not supported"
+            return [str(x) for x in self.node_iterator( i_key.start, i_key.stop )]
+        else:
+            raise Exception("Not implemented yet")
+        
     def __contains__( self, i_key = None ):
         return (self.find_node( i_key ) is not None)
 
@@ -273,3 +278,13 @@ if __name__ == "__main__":
         print( "--------------------------------------------------" )
         print("Test an iterator that returns all nodes in a given range")
         print( [x.__str__() for x in my_tree.node_iterator(7, 25) ])
+
+    if (True):
+        print( "--------------------------------------------------" )
+        print("Test item index with overload of square bracket operator")
+        print( my_tree[7] )
+
+    if (True):
+        print( "--------------------------------------------------" )
+        print("Test slice")
+        print( my_tree[7:25] )
