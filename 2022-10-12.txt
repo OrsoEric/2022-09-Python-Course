@@ -1,0 +1,11 @@
+math lesson
+tools changes continuously and it's important to stay up to date
+numpy is fundamental
+numpy array access
+>tuple
+>booleans
+>array
+>integers
+>tuple of slices
+rank number of dimensions
+shape 
